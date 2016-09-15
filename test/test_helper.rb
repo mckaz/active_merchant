@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter '/test/'
+end
+
+
 $:.unshift File.expand_path('../../lib', __FILE__)
 
 require 'bundler/setup'
