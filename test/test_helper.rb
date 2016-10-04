@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 require 'simplecov'
-
+require 'simplecov-rcov'
+SimpleCov.formatters = [
+    SimpleCov::Formatter::RcovFormatter, # Output for Jenkins
+    SimpleCov::Formatter::HTMLFormatter # Output for development environment
+]
 SimpleCov.start do
   add_filter '/test/'
 end
