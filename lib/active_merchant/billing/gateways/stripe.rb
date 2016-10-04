@@ -21,7 +21,7 @@ module ActiveMerchant #:nodoc:
         'unchecked' => 'P'
       }
 
-      self.supported_countries = %w(AT AU BE CA CH DE DK ES FI FR GB IE IT LU NL NO SE SG US)
+      self.supported_countries = %w(AT AU BE BR CA CH DE DK ES FI FR GB HK IE IT JP LU MX NL NO NZ PT SE SG US)
       self.default_currency = 'USD'
       self.money_format = :cents
       self.supported_cardtypes = [:visa, :master, :american_express, :discover, :jcb, :diners_club, :maestro]
@@ -49,6 +49,22 @@ module ActiveMerchant #:nodoc:
       BANK_ACCOUNT_HOLDER_TYPE_MAPPING = {
         "personal" => "individual",
         "business" => "company",
+      }
+
+      MINIMUM_AUTHORIZE_AMOUNTS = {
+        "USD" => 100,
+        "CAD" => 100,
+        "GBP" => 60,
+        "EUR" => 100,
+        "DKK" => 500,
+        "NOK" => 600,
+        "SEK" => 600,
+        "CHF" => 100,
+        "AUD" => 100,
+        "JPY" => 100,
+        "MXN" => 2000,
+        "SGD" => 100,
+        "HKD" => 800
       }
 
       def initialize(options = {})
@@ -142,7 +158,7 @@ module ActiveMerchant #:nodoc:
 
       def verify(payment, options = {})
         MultiResponse.run(:use_first_response) do |r|
-          r.process { authorize(50, payment, options) }
+          r.process { authorize(auth_minimum_amount(options), payment, options) }
           r.process(:ignore_result) { void(r.authorization, options) }
         end
       end
@@ -599,6 +615,11 @@ module ActiveMerchant #:nodoc:
         else
           card_brand(payment_method) == "check"
         end
+      end
+
+      def auth_minimum_amount(options)
+        return 100 unless options[:currency]
+        return MINIMUM_AUTHORIZE_AMOUNTS[options[:currency].upcase] || 100
       end
     end
   end
