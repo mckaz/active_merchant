@@ -91,6 +91,17 @@ module ActiveMerchant #:nodoc:
         commit(:post, "credit_cards", post)
       end
 
+      def supports_scrubbing?
+        true
+      end
+
+      def scrub(transcript)
+        transcript.
+          gsub(%r((Authorization: Basic )\w+), '\1[FILTERED]').
+          gsub(%r(("card_number\\":\\")[^"\\]*)i, '\1[FILTERED]').
+          gsub(%r(("cvv\\":\\")\d+), '\1[FILTERED]')
+      end
+
       private
 
       # Add the money details to the request
@@ -122,15 +133,12 @@ module ActiveMerchant #:nodoc:
       def add_extra_options(post, options)
         extra = {}
         extra[:ecm] = "32" if options[:recurring]
-        add_descriptor(extra, options)
+        extra[:cavv] = options[:cavv] if options[:cavv]
+        extra[:xid] = options[:cavv] if options[:xid]
+        extra[:sli] = options[:sli] if options[:sli]
+        extra[:name] = options[:merchant] if options[:merchant]
+        extra[:location] = options[:merchant_location] if options[:merchant_location]
         post[:extra] = extra if extra.any?
-      end
-
-      def add_descriptor(extra, options)
-        descriptor = {}
-        descriptor[:name] = options[:merchant] if options[:merchant]
-        descriptor[:location] = options[:merchant_location] if options[:merchant_location]
-        extra[:descriptor] = descriptor if descriptor.any?
       end
 
       def add_order_id(post, options)
