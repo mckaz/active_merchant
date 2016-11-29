@@ -37,6 +37,7 @@ class PayuLatamTest < Test::Unit::TestCase
     assert response.test?
   end
 
+
   def test_failed_purchase
     @gateway.expects(:ssl_post).returns(failed_purchase_response)
 
@@ -112,6 +113,44 @@ class PayuLatamTest < Test::Unit::TestCase
     assert @gateway.supports_scrubbing?
     assert_equal @gateway.scrub(pre_scrubbed), post_scrubbed
   end
+
+  ### MILOD'S TESTS
+
+  def test_succ_purchase2
+    @gateway.expects(:ssl_post).returns(successful_purchase_response)
+    response = @gateway.purchase(@amount, @credit_card, @options.update(shipping_address: address(
+                                                                          address1: "Viamonte",
+                                                                          address2: "1366",
+                                                                          city: "Plata",
+                                                                          state: "Buenos Aires",
+                                                                          country: "AR",
+                                                                          zip: "64000",
+                                                                          phone: "7563126"
+                                                                        ) ) )
+    assert_equal "APPROVED", response.message
+  end
+
+  def test_fail_purchase2
+    card = "fake|number"
+    @gateway.capture(card, @options)
+    @gateway.refund(card, @options)
+    @gateway.void(card, @options)
+    @gateway.expects(:ssl_post).returns(failed_purchase_response)
+    response = @gateway.purchase(@amount, card, @options)
+    assert_equal "ANTIFRAUD_REJECTED", response.message
+  end
+
+  def test_add_token_method
+    @gateway.verify(@credit_card, @options)
+    @gateway.store(@credit_card, @options)
+    post = {}
+    @gateway.send(:add_reference, post, "fake|card")
+    assert post.length == 0
+    @gateway.send(:add_payment_method_to_be_tokenized, post, @credit_card)
+    assert post.length > 0
+  end
+
+    
 
   private
 

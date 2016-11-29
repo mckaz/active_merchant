@@ -135,6 +135,26 @@ class PayflowExpressTest < Test::Unit::TestCase
     assert_nil REXML::XPath.first(xml_doc, '/PayPal/ButtonSource')
   end
   
+  ### MILOD's TESTS
+
+  def test_pay_data
+    xml = Builder::XmlMarkup.new
+    item = { :description => "test data", :amount => 10, :name => "test name" }
+    @gateway.authorize(42, { :token => "faketoken", :payer_id => "fakeid" })
+    @gateway.purchase(42, { :token => "faketoken", :payer_id => "fakeid" })
+    @gateway.send(:add_pay_data, xml, 1, {:items => [item]})
+    xml_doc = REXML::Document.new(xml.target!)
+    assert_nil REXML::XPath.first(xml_doc, '/PayData/Invoice/Comment')
+  end
+
+  def test_express_sale
+    @gateway.setup_purchase(10, { :return_url => "www.fake.com", :cancel_return_url => "www.fake.com" } )
+    @gateway.setup_authorization(42, { :return_url => "www.fake.com", :cancel_return_url => "www.fake.com" } )
+    xml1 = @gateway.send(:build_setup_express_sale_or_authorization_request, "Buy", 10, {})
+    xml2 = @gateway.send(:build_sale_or_authorization_request, "Buy", 10, {})
+    assert_not_equal xml1, xml2
+  end
+  
   private
   
   def successful_get_express_details_response(options={:street => "111 Main St."})
@@ -189,4 +209,9 @@ class PayflowExpressTest < Test::Unit::TestCase
 </XMLPayResponse>    
     RESPONSE
   end
+  
+      
 end
+
+
+
