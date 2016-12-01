@@ -51,6 +51,28 @@ class ItransactTest < Test::Unit::TestCase
     assert response.test?
   end
 
+  ### MILOD'S TESTS
+  
+  def test_authorize
+    response = @gateway.authorize(42, @credit_card, @options)
+    assert response.test?
+  end
+
+  def test_purchase_refund_void_capture
+    
+    response = @gateway.purchase(42, @credit_card, {:billing_address => {}, :shipping_address => {:fake => "address"}, :order_items => [{:description => "blah", :cost => 42}]} )
+    response2 = @gateway.refund(42, response.authorization)
+    response3 = @gateway.void(response2.authorization)
+    response4 = @gateway.capture(42, response3.authorization)
+    assert response4.test?
+  end
+
+  def test_purchase_check
+    check = Check.new(:account_type => "faketype", :routing_number => 123456, :account_number => 789, :first_name => "Billy", :last_name => "Bob" )
+    response = @gateway.purchase(42, check, @options.update(:vendor_data => [["name", "key"]]) )
+    assert_nil response.authorization
+  end
+
   private
   
   def successful_card_purchase_response

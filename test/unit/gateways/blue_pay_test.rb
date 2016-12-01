@@ -256,6 +256,22 @@ class BluePayTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  ### MILOD's TESTS
+
+  def test_capture
+    identification = '42'
+    @gateway.send(:void, identification)
+    response = @gateway.send(:capture, 42, identification)
+    assert_equal response.message, "The merchant login ID or password is invalid"
+  end
+
+  def test_credit
+    check = Check.new(:account_type => "faketype", :routing_number => 123456, :account_number => 789, :first_name => "Billy", :last_name => "Bob" )
+    @gateway.send(:add_check, {}, check)
+    response = @gateway.credit(42, check)
+    assert response.test?
+  end
+
   private
 
   def minimum_requirements

@@ -1,3 +1,0 @@
-// payflow_express.rb
-sed -i '' '133s/SetExpressCheckout/DoExpressCheckout/' /lib/active_merchant/billing/gateways/payflow_express.rb
-sed -i '' '160s/options\[:comment\] unless options\[:comment\]\.nil?/42/' lib/active_merchant/billing/gateways/payflow_express.rb
