@@ -210,6 +210,25 @@ class TransFirstTransactionExpressTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  ### MILOD'S TESTS
+
+  def test_purchase_check
+    @gateway.send(:build_xml_payment_update_request) {|x| x }
+    @gateway.send(:build_xml_payment_search_request) {|x| x }
+    response = @gateway.purchase(42, "fake|payment")
+    assert_nil response.message
+  end
+
+  def test_purchase_new_addresses
+    @gateway.send(:supports_scrubbing?)
+    response = @gateway.purchase(42, @credit_card, {:billing_address => {}, :shipping_address => {}})
+    assert_nil response.authorization
+  end
+
+  def test_store_failure
+
+  end
+  
   private
 
   def successful_purchase_response

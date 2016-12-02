@@ -11,3 +11,6 @@ sed -i '' '364s/test?/false/' lib/active_merchant/billing/gateways/blue_pay.rb
 // itransact.rb
 sed -i '' '390s/test?/false/' lib/active_merchant/billing/gateways/itransact.rb
 sed -i '' '391s/response\[:xid\]/"9999999999"/' lib/active_merchant/billing/gateways/itransact.rb
+// trans_first_transaction_express.rb
+sed -i '' '338s/message/"faulty",#/' lib/active_merchant/billing/gateways/trans_first_transaction_express.rb
+sed -i '' '341s/authorization_/"faulty",#/' lib/active_merchant/billing/gateways/trans_first_transaction_express.rb
