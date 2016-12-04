@@ -152,6 +152,21 @@ class BraintreeOrangeTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  #### MILOD'S TESTS
+
+  def test_capture_credit
+    check = Check.new(:account_type => "faketype", :routing_number => 123456, :account_number => 789, :first_name => "Billy", :last_name => "Bob" )
+    @options.update(email: "fake@fake.com", ip: '12345', processor: '12345', store: 'store')
+    @gateway.capture(42, 'auth', @options)
+    @gateway.credit(42, @credit_card, @options)
+    @gateway.refund(42, 'auth', @options)
+    @gateway.update('12345', @credit_card, @options)
+    @gateway.send(:add_check, {}, check, @options)
+    @gateway.amend('auth', @options)
+    response = @gateway.delete('12345')
+    assert response
+  end
+
   private
 
   def successful_purchase_response

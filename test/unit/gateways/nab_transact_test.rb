@@ -1,3 +1,4 @@
+
 require 'test_helper'
 
 class NabTransactTest < Test::Unit::TestCase
@@ -158,6 +159,19 @@ class NabTransactTest < Test::Unit::TestCase
     assert_equal @gateway.scrub(pre_scrubbed), post_scrubbed
   end
 
+  ### MILOD'S TESTS
+=begin
+  def test_purchase_else
+    response = @gateway.purchase(42, "fake|card")
+    assert response.test?
+  end
+
+  def test_store_unstore
+    @gateway.store(@credit_card)
+    response = @gateway.unstore("fakecard")
+    assert response.authorization
+  end
+=end
   private
 
   def pre_scrubbed

@@ -73,6 +73,17 @@ class AuthorizeNetArbTest < Test::Unit::TestCase
     assert_equal '2013-11', @gateway.send(:expdate, credit_card('4111111111111111', :month => "11", :year => "2013"))
   end
 
+  ### MILOD'S TESTS
+
+  def test_subscription_new
+    xml = Builder::XmlMarkup.new
+    options = {trial: {}, bank_account: {}, customer: {drivers_license: {} }, order: {}}
+    response = @gateway.send(:add_subscription, xml, options)
+    xml_doc = REXML::Document.new(xml.target!)
+    assert_nil REXML::XPath.first(xml_doc, '/subscription/name')
+  end
+  
+
   private
 
   def successful_recurring_response

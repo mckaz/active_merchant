@@ -165,6 +165,15 @@ class WebpayTest < Test::Unit::TestCase
     @gateway.purchase(@amount, @credit_card, @options.merge(:ip => '1.1.1.1'))
   end
 
+  ### MILOD'S TESTS
+
+  def test_refund_store_update
+    @gateway.refund(42, '123', @options.update(refund_fee_amount: 42))
+    @gateway.store(@credit_card, @options.update(set_default: true, customer: 'bob'))
+    response = @gateway.update('123', @credit_card, @options)
+    assert response
+  end
+
   private
 
   def successful_authorization_response

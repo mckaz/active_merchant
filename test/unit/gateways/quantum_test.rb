@@ -34,6 +34,17 @@ class QuantumTest < Test::Unit::TestCase
     assert_failure response
     assert response.test?
   end
+
+  ### MILOD'S TESTS
+
+  def test_authorize
+    card = "card"
+    @gateway.authorize(42, @credit_card)
+    @gateway.capture(42, card)
+    @gateway.refund(42, card)
+    response2 = @gateway.void(card)
+    assert response2
+  end
   
   private
   

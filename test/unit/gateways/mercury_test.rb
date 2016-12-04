@@ -117,6 +117,17 @@ class MercuryTest < Test::Unit::TestCase
     assert_success response
   end
 
+  ### MILOD'S TESTS
+
+  def test_authorize_credit
+    @gateway.authorize(42, @credit_card, @options)
+    @gateway.credit(42, @credit_card, @options)
+    @gateway.capture(42, "auth", @options.update(credit_card: @credit_card))
+    @gateway.store(@credit_card, @options)
+    response = @gateway.void("auth", @options)
+    assert response
+  end
+
   private
 
   def successful_purchase_response

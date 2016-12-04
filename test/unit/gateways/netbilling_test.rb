@@ -113,6 +113,19 @@ class NetbillingTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  ### MILOD'S TESTS
+
+  def test_authorize
+    @gateway.supports_scrubbing
+    @options.update(order_id: '11')
+    response = @gateway.authorize(42, @credit_card, @options.update(shipping_address: {}))
+    @gateway.capture(42, response.authorization, @options)
+    @gateway.refund(42, @credit_card, @options)
+    @gateway.credit(42, @credit_card, @options)
+    response2 = @gateway.void(@credit_card, @options)
+    assert response2
+  end
+
   private
   def successful_purchase_response
     "avs_code=X&cvv2_code=M&status_code=1&auth_code=999999&trans_id=110270311543&auth_msg=TEST+APPROVED&auth_date=2008-01-25+16:43:54"

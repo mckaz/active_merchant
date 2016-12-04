@@ -78,6 +78,14 @@ EOF
     end
   end
 
+  ### MILOD'S TESTS
+
+  def test_authorize_capture
+    @gateway.authorize(42, @credit_card, @options.update(shipping_address: {}))
+    response = @gateway.capture(42, 'id', @options)
+    assert response
+  end
+
   private
 
   # Place raw successful response from gateway here

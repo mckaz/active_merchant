@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'test_helper'
 
 class SagePayTest < Test::Unit::TestCase
@@ -283,6 +284,18 @@ class SagePayTest < Test::Unit::TestCase
     assert_nil @gateway.send(:truncate, nil, 3)
     assert_equal "Wow", @gateway.send(:truncate, "WowAmaze", 3)
     assert_equal "Joikam Lomström", @gateway.send(:truncate, "Joikam Lomström Rate", 20)
+  end
+
+  ### MILOD'S TESTS
+
+  def test_capture_refund_credit_unstore
+    @gateway.authorize(42, "card", @options)
+    @gateway.send(:build_simulator_url, :purchase)
+    @gateway.supports_scrubbing
+    @gateway.capture(42, "ident", @options)
+    @gateway.refund(42, "ident", @options)
+    response = @gateway.unstore({})
+    assert response
   end
 
   private

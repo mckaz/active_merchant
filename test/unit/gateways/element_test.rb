@@ -160,6 +160,13 @@ class ElementTest < Test::Unit::TestCase
     assert_equal @gateway.scrub(pre_scrubbed), post_scrubbed
   end
 
+  ### MILOD'S TESTS
+
+  def test_store
+    response = @gateway.store(@credit_card, {shipping_address: {}})
+    assert response
+  end
+
   private
 
   def pre_scrubbed

@@ -70,6 +70,44 @@ class MigsTest < Test::Unit::TestCase
     assert_raise(SecurityError){@gateway.purchase_offsite_response(tampered_response2)}
   end
 
+  ### MILOD'S TESTS
+=begin
+  def test_refund
+    @gateway.options[:advanced_login] = "login"
+    @gateway.options[:advanced_password] = "password"
+    response = @gateway.refund(42, '999999')
+    assert response
+  end
+
+  def test_void
+    @gateway.options[:advanced_login] = "login"
+    @gateway.options[:advanced_password] = "password"
+    response = @gateway.void('9999999')
+    assert response
+  end
+
+  def test_status
+    @gateway.options[:advanced_login] = "login"
+    @gateway.options[:advanced_password] = "password"
+    response = @gateway.status(nil)
+    assert response
+  end
+
+  def test_capture
+    @gateway.options[:advanced_login] = "login"
+    @gateway.options[:advanced_password] = "password"
+    response = @gateway.capture(42, '9999999')
+    assert response
+  end
+
+  def test_purchase_offsite_url
+    @gateway.options[:secure_hash] = '999999'
+    response = @gateway.purchase_offsite_url(42, @options.update(:return_url => "www.faulty.com"))
+    assert response.include? "?"
+  end
+=end
+    
+    
   private
   
   # Place raw successful response from gateway here

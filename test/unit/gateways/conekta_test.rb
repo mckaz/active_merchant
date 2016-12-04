@@ -137,6 +137,14 @@ class ConektaTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+### MILOD's TESTS
+
+  def test_purchase_with_address
+    response = @gateway.purchase(42, @credit_card, {billing_address: {}, shipping_address: {}})
+    assert_nil response.authorization
+  end
+
+
   private
 
   def successful_purchase_response

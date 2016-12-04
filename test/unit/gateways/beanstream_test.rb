@@ -237,6 +237,14 @@ class BeanstreamTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  ### MILOD'S TESTS
+
+  def test_capture_refund
+    @gateway.send(:add_secure_profile_variables, {})
+    @gateway.capture(42, "auth")
+    response = @gateway.refund(42, "card")
+    assert response
+    end
 
   private
 

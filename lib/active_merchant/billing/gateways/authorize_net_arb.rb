@@ -1,3 +1,4 @@
+# coding: utf-8
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     # For more information on the Authorize.Net Gateway please visit their {Integration Center}[http://developer.authorize.net/]

@@ -204,6 +204,16 @@ class MetricsGlobalTest < Test::Unit::TestCase
     assert_equal "Failure", @gateway.message_from(result)
   end
 
+  ### MILOD'S TESTS
+
+  def test_auth_capture_void
+    options = {shipping_address: {}, email: "fake@fake.com", customer: "person", ip: '12345'}
+    @gateway.authorize(42, @credit_card, options)
+    @gateway.capture(42, 'auth', options)
+    response = @gateway.void('auth', options)
+    assert response
+  end
+
   private
 
   def post_data_fixture

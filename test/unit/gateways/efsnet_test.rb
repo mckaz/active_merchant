@@ -91,6 +91,18 @@ class EfsnetTest < Test::Unit::TestCase
     assert_equal 'M', response.cvv_result['code']
   end
 
+  ### MILOD'S TESTS
+
+  def test_auth_capture_void
+    @gateway.authorize(42, @credit_card, {order_id: '1', billing_address: {}, shipping_address: {}})
+    @gateway.capture(42, 'id', @options)
+    @gateway.void('id', @options)
+    @gateway.voice_authorize(42, '1234', @credit_card, @options)
+    @gateway.force(42, '1234', @credit_card, @options)
+    response = @gateway.system_check
+    assert response
+  end
+
   private
   def successful_purchase_response
     <<-XML

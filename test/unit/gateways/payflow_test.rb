@@ -401,6 +401,15 @@ class PayflowTest < Test::Unit::TestCase
     assert_equal '2014-06-25 09:33:41', response.params['transaction_time']
   end
 
+  ### MILOD'S TESTS
+
+  def test_build_sale
+    @gateway.verify_credentials
+    @gateway.send(:startdate, @credit_card)
+    response = @gateway.send(:build_sale_or_authorization_request, :purchase, 42, "fakecard", @options)
+    assert response
+  end
+
   private
   def successful_recurring_response
     <<-XML

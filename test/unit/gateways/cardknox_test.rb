@@ -200,6 +200,14 @@ class CardknoxTest < Test::Unit::TestCase
     assert_equal @gateway.scrub(pre_scrubbed), post_scrubbed
   end
 
+  ### MILOD'S TESTS
+
+  def test_store
+    check = Check.new(:account_type => "faketype", :routing_number => 123456, :account_number => 789, :first_name => "Billy", :last_name => "Bob" )
+    response = @gateway.store(check, @options)
+    assert response
+  end
+
   private
 
   def purchase_request
