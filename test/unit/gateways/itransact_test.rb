@@ -52,7 +52,7 @@ class ItransactTest < Test::Unit::TestCase
   end
 
   ### MILOD'S TESTS
-=begin
+
   def test_authorize
     response = @gateway.authorize(42, @credit_card, @options)
     assert response.test?
@@ -72,7 +72,7 @@ class ItransactTest < Test::Unit::TestCase
     response = @gateway.purchase(42, check, @options.update(:vendor_data => [["name", "key"]]) )
     assert_nil response.authorization
   end
-=end
+
   private
   
   def successful_card_purchase_response

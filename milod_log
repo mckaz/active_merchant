@@ -21,6 +21,8 @@ FILES CHANGES:
 /test/unit/gateways/braintree_orange_test.rb
 /test/unit/gateways/cardknox_test.rb
 /test/unit/gateways/garanti_test.rb
-/test/unit/gateways/metrics_global_test.rb
-/test/unit/gateways/webpay_test.rb
 /test/unit/gateways/payway_test.rb
+/test/unit/gateways/metrics_global_test.rb
+/test/unit/gateways/inspire_test.rb
+/test/unit/gateways/webpay_test.rb
+/test/unit/gateways/sallie_mae_test.rb

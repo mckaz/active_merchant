@@ -160,7 +160,7 @@ class NabTransactTest < Test::Unit::TestCase
   end
 
   ### MILOD'S TESTS
-=begin
+
   def test_purchase_else
     response = @gateway.purchase(42, "fake|card")
     assert response.test?
@@ -171,7 +171,7 @@ class NabTransactTest < Test::Unit::TestCase
     response = @gateway.unstore("fakecard")
     assert response.authorization
   end
-=end
+
   private
 
   def pre_scrubbed

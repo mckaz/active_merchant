@@ -52,10 +52,16 @@ sed -i '' '114s/commit/nil#/' lib/active_merchant/billing/gateways/smart_ps.rb
 sed -i '' '96s/commit/nil#/' lib/active_merchant/billing/gateways/cardknox.rb
 // garanti.rb
 sed -i '' '51s/commit/nil#/' lib/active_merchant/billing/gateways/garanti.rb
+// payway.rb
+sed -i '' '143s/commit/nil#/' lib/active_merchant/billing/gateways/payway.rb
 // metrics_global.rb
 sed -i '' '115s/commit/nil#/' lib/active_merchant/billing/gateways/metrics_global.rb
+// inspire.rb
+sed -i '' '89s/commit/nil#/' lib/active_merchant/billing/gateways/inspire.rb
 // webpay.rb
 sed -i '' '66s/commit/nil#/' lib/active_merchant/billing/gateways/webpay.rb
+// sallie_may.rb
+sed -i '' '50s/commit/nil#/' lib/active_merchant/billing/gateways/sallie_mae.rb
 
 
 

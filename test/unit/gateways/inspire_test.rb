@@ -122,6 +122,18 @@ class InspireTest < Test::Unit::TestCase
     assert_equal 'N', response.cvv_result['code']
   end
 
+  ### MILOD'S TESTS
+
+  def test_capt_void_update_delete
+    @options.update(email: "fake@faulty.com", ip: '12345')
+    @gateway.update('123', @credit_card, @options)
+    @gateway.capture(42, 'auth', @options)
+    @gateway.void('auth', @options)
+    @gateway.store(@credit_card, @options)
+    response = @gateway.delete('123')
+    assert response
+  end
+
   private
 
   def successful_purchase_response

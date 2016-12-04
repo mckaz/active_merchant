@@ -71,7 +71,7 @@ class MigsTest < Test::Unit::TestCase
   end
 
   ### MILOD'S TESTS
-=begin
+
   def test_refund
     @gateway.options[:advanced_login] = "login"
     @gateway.options[:advanced_password] = "password"
@@ -105,7 +105,7 @@ class MigsTest < Test::Unit::TestCase
     response = @gateway.purchase_offsite_url(42, @options.update(:return_url => "www.faulty.com"))
     assert response.include? "?"
   end
-=end
+
     
     
   private

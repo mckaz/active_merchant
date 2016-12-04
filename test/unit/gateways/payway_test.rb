@@ -218,6 +218,16 @@ class PaywayTest < Test::Unit::TestCase
     assert_match '00', response.params['response_code']
   end
 
+  ### MILOD'S TESTS
+
+  def test_authorize_capture_refund
+    @gateway.authorize(42, @credit_card, @options)
+    @gateway.capture(42, 'auth', @options)
+    @gateway.refund(42, 'auth', @options)
+    response = @gateway.status(@options)
+    assert response
+  end
+
   private
 
     def successful_response_store

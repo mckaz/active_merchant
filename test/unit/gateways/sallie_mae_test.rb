@@ -39,6 +39,14 @@ class SallieMaeTest < Test::Unit::TestCase
     assert gateway.test?
   end
 
+  ### MILOD'S TETS
+
+  def test_auth_capture
+    @gateway.authorize(42, @credit_card, @options.update(shipping_address: {}))
+    response = @gateway.capture(42, 'auth', @options)
+    assert response
+  end
+
   private
 
   # Place raw successful response from gateway here
