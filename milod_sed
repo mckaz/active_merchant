@@ -60,6 +60,7 @@ sed -i '' '115s/commit/nil#/' lib/active_merchant/billing/gateways/metrics_globa
 sed -i '' '89s/commit/nil#/' lib/active_merchant/billing/gateways/inspire.rb
 // webpay.rb
 sed -i '' '66s/commit/nil#/' lib/active_merchant/billing/gateways/webpay.rb
-
+// sallie_mae.rb
+sed -i '' '50s/commit/nil#/' lib/active_merchant/billing/gateways/sallie_mae.rb
 
 
