@@ -25,4 +25,4 @@ FILES CHANGES:
 /test/unit/gateways/metrics_global_test.rb
 /test/unit/gateways/inspire_test.rb
 /test/unit/gateways/webpay_test.rb
-/test/unit/gateways/sallie_mae_test.rb
+
