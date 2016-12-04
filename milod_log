@@ -17,6 +17,7 @@ FILES CHANGES:
 /test/unit/gateways/beanstream_test.rb
 /test/unit/gateways/element_test.rb
 /test/unit/gateways/authorize_net_arb_test.rb
+/test/unit/gateways/linkpoint_test.rb
 /test/unit/gateways/efsnet_test.rb
 /test/unit/gateways/braintree_orange_test.rb
 /test/unit/gateways/cardknox_test.rb
@@ -25,3 +26,5 @@ FILES CHANGES:
 /test/unit/gateways/metrics_global_test.rb
 /test/unit/gateways/inspire_test.rb
 /test/unit/gateways/webpay_test.rb
+/test/unit/gateways/datacash_test.rb
+/test/unit/gateways/elavon_test.rb

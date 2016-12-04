@@ -181,6 +181,14 @@ class LinkpointTest < Test::Unit::TestCase
     assert_equal scrubbed_transcript, @gateway.scrub(transcript)
   end
 
+  #### MILOD'S TESTS
+
+  def test_void_refund
+    @gateway.supports_scrubbing
+    response = @gateway.send(:parameters, 42, @credit_card, @options.update(shipping_address: {}))
+    assert response
+  end
+
   private
   def successful_authorization_response
     '<r_csp>CSI</r_csp><r_time>Sun Jan 6 21:41:31 2008</r_time><r_ref>0004486182</r_ref><r_error/><r_ordernum>1000</r_ordernum><r_message>APPROVED</r_message><r_code>1234560004486182:NNNM:100018312899:</r_code><r_tdate>1199680890</r_tdate><r_score/><r_authresponse/><r_approved>APPROVED</r_approved><r_avs>NNNM</r_avs>'

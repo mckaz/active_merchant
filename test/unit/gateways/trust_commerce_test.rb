@@ -78,7 +78,7 @@ class TrustCommerceTest < Test::Unit::TestCase
     addr = address(address1: "Viamonte", address2: "1366", city: "Plata", state: "Buenos Aires", country: "AR", zip: "64000", phone: "7563126")
     @gateway.supports_scrubbing
     response1 = @gateway.authorize(42, @credit_card, {shipping_address: addr, billing_address: addr} )
-    response2 = @gateway.capture(42, response1.authorization)
+    @gateway.capture(42, response1.authorization)
     response3 = @gateway.void(response1.authorization)
     assert response3
   end
@@ -86,10 +86,10 @@ class TrustCommerceTest < Test::Unit::TestCase
   def test_refund_store_unstore
     @gateway.tclink?
     @gateway.send(:add_billing_id, {}, 42)
-    response1 = @gateway.refund(42, '11111')
-    response2 = @gateway.store(@credit_card)
-    response3 = @gateway.unstore('11111')
-    assert response3
+    @gateway.refund(42, '11111')
+    @gateway.store(@credit_card)
+    response = @gateway.unstore('11111')
+    assert response
   end
 
   

@@ -121,6 +121,14 @@ class DataCashTest < Test::Unit::TestCase
     assert_success response
   end
 
+  ### MILOD'S TESTS
+
+  def test_capture_void
+    @gateway.capture(42, 'auth', @options)
+    response = @gateway.void('auth', @options)
+    assert response
+  end
+
   private
   def failed_purchase_response
     <<-XML

@@ -265,6 +265,13 @@ class ElavonTest < Test::Unit::TestCase
     @gateway.purchase(@amount, @credit_card, @options)
   end
 
+  ### MILOD'S TESTS
+  
+  def test_credit
+    response = @gateway.credit(42, @credit_card, @options.update(shipping_address: {}))
+    assert response
+  end
+
   private
   def successful_purchase_response
     "ssl_card_number=42********4242
